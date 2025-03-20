@@ -1,5 +1,8 @@
 // filepath: static/script.js
 
+// Get the primary color from the CSS custom property
+const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color').trim();
+
 // Initialize the chart
 const ctx = document.getElementById('sensorChart').getContext('2d');
 const sensorChart = new Chart(ctx, {
@@ -9,12 +12,17 @@ const sensorChart = new Chart(ctx, {
         datasets: [{
             label: 'Sensor Value',
             data: [], // Sensor values
-            borderColor: 'rgba(75, 192, 192, 1)',
+            borderColor: primaryColor, // Use the primary color
             borderWidth: 2,
             fill: false
         }]
     },
     options: {
+        plugins: {
+            legend: {
+                display: false // Remove the legend
+            }
+        },
         scales: {
             x: {
                 type: 'time',

@@ -1,4 +1,8 @@
 /* filepath: static/style.css */
+:root {
+    --primary-color: #0078d7; /* Define the primary color */
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
@@ -8,7 +12,7 @@ body {
 }
 
 h1 {
-    color: #0078d7;
+    color: var(--primary-color); /* Use the custom property */
 }
 
 input, button {
@@ -18,18 +22,18 @@ input, button {
 }
 
 button {
-    background-color: #0078d7;
+    background-color: var(--primary-color); /* Use the custom property */
     color: white;
     border: none;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #005a9e;
+    background-color: #005a9e; /* Optional: Keep hover color separate */
 }
 
 #sensorValue {
     font-size: 24px;
     font-weight: bold;
-    color: #0078d7; 
+    color: var(--primary-color); /* Use the custom property */
 }
