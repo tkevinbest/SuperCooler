@@ -37,17 +37,35 @@ const sensorChart = new Chart(ctx, {
     }
 });
 
-// Function to update the sensor value and graph
+// Function to update the sensor value and append a new point to the graph
 function updateSensorValue() {
     fetch('/sensor_data')
         .then(response => response.json())
         .then(data => {
-            const latestValue = data[data.length - 1].value; // Get the latest sensor value
-            document.getElementById('sensorValue').textContent = `${latestValue.toFixed(2)} °F`; // Add °F
-            // Update the chart
-            sensorChart.data.labels = data.map(entry => new Date(entry.timestamp));
-            sensorChart.data.datasets[0].data = data.map(entry => entry.value);
-            sensorChart.update();
+            // Get the latest sensor reading
+            const latestEntry = data[data.length - 1];
+            const latestTimestamp = new Date(latestEntry.timestamp);
+            const latestValue = latestEntry.value;
+
+            // Update the "Current Temperature" display
+            document.getElementById('sensorValue').textContent = `${latestValue.toFixed(2)} °F`;
+
+            // Check if the latest point is already on the chart
+            const lastChartLabel = sensorChart.data.labels[sensorChart.data.labels.length - 1];
+            if (!lastChartLabel || new Date(lastChartLabel).getTime() !== latestTimestamp.getTime()) {
+                // Append the new data point to the chart
+                sensorChart.data.labels.push(latestTimestamp);
+                sensorChart.data.datasets[0].data.push(latestValue);
+
+                // Remove old data points if exceeding the desired history length
+                if (sensorChart.data.labels.length > 3600) {
+                    sensorChart.data.labels.shift(); // Remove the oldest label
+                    sensorChart.data.datasets[0].data.shift(); // Remove the oldest data point
+                }
+
+                // Update the chart to reflect the new data
+                sensorChart.update('default'); // Use 'none' to avoid full re-render. Default is prettier
+            }
         });
 }
 
