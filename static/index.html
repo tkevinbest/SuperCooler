@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temperature Sensor</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 </head>
 <body>
     <h1>Temperature Sensor Control</h1>
@@ -13,6 +15,11 @@
     <label for="setpoint">Setpoint:</label>
     <input type="number" id="setpoint" value="30.00">
     <button onclick="setSetpoint()">Set</button>
+
+    <h2>Sensor Value History</h2>
+    <canvas id="sensorChart" width="400" height="200"></canvas>
+
+    <!-- Include the external script -->
     <script src="/static/script.js"></script>
 </body>
 </html>
