@@ -1,4 +1,3 @@
-# filepath: c:\Users\tkevi\Downloads\temp.py
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import threading
