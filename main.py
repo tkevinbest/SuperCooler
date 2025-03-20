@@ -5,6 +5,7 @@ import time
 import json
 from collections import deque
 from datetime import datetime, timedelta
+import random  
 
 # Shared sensor value and setpoint
 current_sensor_value = 25.0
@@ -20,7 +21,8 @@ def read_sensor():
     global current_sensor_value
     while True:
         with lock:
-            current_sensor_value += (time.time() % 2 - 1) * 0.1
+            noise = random.uniform(-2, 2) 
+            current_sensor_value = 34 + noise
             # Add the current reading to the history
             sensor_history.append({"timestamp": datetime.now().isoformat(), "value": current_sensor_value})
         time.sleep(1)
