@@ -34,13 +34,12 @@ class MyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         global current_sensor_value, setpoint
         if self.path == '/':
-            # Serve the main HTML file
             self.path = '/static/index.html'
 
-        if self.path.startswith('/static/'):
-            # Serve static files (HTML, CSS, JS)
+        if self.path.startswith('/static/') or self.path.startswith('/node_modules'):
+            # Serve static files or node_modules
             try:
-                file_path = os.path.join(os.getcwd(), self.path[1:])
+                file_path = os.path.join(os.getcwd(), self.path[1:])  # Remove leading '/'
                 with open(file_path, 'rb') as file:
                     self.send_response(200)
                     if self.path.endswith('.html'):
