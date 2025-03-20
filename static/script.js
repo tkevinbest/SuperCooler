@@ -42,22 +42,11 @@ function updateSensorValue() {
     fetch('/sensor_data')
         .then(response => response.json())
         .then(data => {
-            // Clear the chart data
-            sensorChart.data.labels = [];
-            sensorChart.data.datasets[0].data = [];
-
-            // Populate the chart with the last hour of data
-            data.forEach(entry => {
-                sensorChart.data.labels.push(new Date(entry.timestamp));
-                sensorChart.data.datasets[0].data.push(entry.value);
-            });
-
-            // Update the current sensor value display
-            if (data.length > 0) {
-                const latestValue = data[data.length - 1].value;
-                document.getElementById('sensorValue').textContent = latestValue.toFixed(2);
-            }
-
+            const latestValue = data[data.length - 1].value; // Get the latest sensor value
+            document.getElementById('sensorValue').textContent = `${latestValue.toFixed(2)} °F`; // Add °F
+            // Update the chart
+            sensorChart.data.labels = data.map(entry => new Date(entry.timestamp));
+            sensorChart.data.datasets[0].data = data.map(entry => entry.value);
             sensorChart.update();
         });
 }
