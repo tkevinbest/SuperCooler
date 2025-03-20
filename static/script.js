@@ -66,7 +66,7 @@ function updateSensorValue() {
                 sensorChart.data.datasets[0].data.push(latestValue);
 
                 // Remove old data points if exceeding the desired history length
-                if (sensorChart.data.labels.length > 3600) {
+                if (sensorChart.data.labels.length > 720) {
                     sensorChart.data.labels.shift(); // Remove the oldest label
                     sensorChart.data.datasets[0].data.shift(); // Remove the oldest data point
                 }
@@ -95,5 +95,5 @@ function setSetpoint() {
     });
 }
 
-// Update the sensor value and graph every second
-setInterval(updateSensorValue, 1000);
+// Update the sensor value and graph every 5 seconds
+setInterval(updateSensorValue, 5000);
